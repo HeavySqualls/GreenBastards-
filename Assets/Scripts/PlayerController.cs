@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class PlayerController : Character_Base
 {
-    private SpriteRenderer spRenderer;
+    public bool pIsFlipped;
+
+    private GunController gun;
+    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer gunSpriteRenderer;
     private Animator animator;
 
-    void Start()
+    void Awake()
     {
-        spRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        gunSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        gun = GetComponentInChildren<GunController>();
         animator = GetComponent<Animator>();
     }
 
-    public override void ComputeVelocity()
+    protected override void Update()
+    {
+        base.Update();
+        ComputeVelocity();
+        FlipGun();
+    }
+
+    protected override void ComputeVelocity()
     {
         Vector2 move = Vector2.zero;
 
@@ -31,15 +44,28 @@ public class PlayerController : Character_Base
             }
         }
 
-        bool flipSprite = (spRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
-        if (flipSprite)
+        bool flipPlayerSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
+        if (flipPlayerSprite)
         {
-            spRenderer.flipX = !spRenderer.flipX;
+            pIsFlipped = !pIsFlipped;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
         animator.SetBool("grounded", isGrounded);
         animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
 
         targetVelocity = move * maxSpeed;
+    }
+
+    private void FlipGun()
+    {
+        if (pIsFlipped)
+        {
+            gun.flipGunSprite = true;
+        }
+        else
+        {
+            gun.flipGunSprite = false;
+        }
     }
 }

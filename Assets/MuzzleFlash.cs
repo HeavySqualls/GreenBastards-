@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoMove : PhysicsObject
+public class MuzzleFlash : MonoBehaviour
 {
     void Update()
     {
-        targetVelocity = Vector2.left;
+        Destroy(gameObject, 0.04f);
     }
 }
