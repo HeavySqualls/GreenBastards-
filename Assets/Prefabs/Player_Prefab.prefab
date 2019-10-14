@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 6697876586223770766}
   - component: {fileID: 1257817631}
   - component: {fileID: 5367276861345093459}
+  - component: {fileID: 8123997470517602278}
   - component: {fileID: 7402307381251589550}
   - component: {fileID: 6708793469464571276}
   m_Layer: 8
@@ -182,6 +183,18 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   gravityModifier: 2
   pIsFlipped: 0
+--- !u!114 &8123997470517602278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006482915954250294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5094a71c177793f418ace3af13389c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &7402307381251589550
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -348,6 +361,8 @@ MonoBehaviour:
   flipGunSprite: 0
   bulletPoint: {fileID: 1956341176}
   bulletPointReversed: {fileID: 1725485}
+  muzzleFlashPoint: {fileID: 0}
+  muzzleFlashPointReversed: {fileID: 0}
 --- !u!1 &7338608445961101693
 GameObject:
   m_ObjectHideFlags: 0

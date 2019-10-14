@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class PlayerController : Character_Base
 {
+    [Space]
+    [Header("Player Status:")]
     public bool pIsFlipped;
+    public bool isInteractable;
+
+    [Space]
+    [Header("Player Stats:")]
+    public int ammo = 0;
+
+    [Space]
+    [Header("Player Refrences:")]
+    public GameObject interactableItem;
 
     private GunController gun;
     private SpriteRenderer spriteRenderer;
-    private SpriteRenderer gunSpriteRenderer;
     private Animator animator;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        gunSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         gun = GetComponentInChildren<GunController>();
         animator = GetComponent<Animator>();
     }
@@ -24,6 +33,25 @@ public class PlayerController : Character_Base
         base.Update();
         ComputeVelocity();
         FlipGun();
+        Interaction();
+    }
+
+    private void Interaction()
+    {
+        if (interactableItem != null)
+        {
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                print("Item picked up.");
+                interactableItem.GetComponent<Interact_Base>().OnInteracted();
+                print(ammo);
+            }
+        }
+    }
+
+    public void InteractableItem(GameObject _interactableObject)
+    {
+        interactableItem = _interactableObject;
     }
 
     protected override void ComputeVelocity()
