@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Character_Base : MonoBehaviour
 {
-    protected float jumpTakeoffSpeed = 6f;
-    protected float maxSpeed = 2f;
-    protected float damageOutput;
-    protected float health;
-
     public float minGroundNormalY = .65f;
     public float gravityModifier = 1f;
 

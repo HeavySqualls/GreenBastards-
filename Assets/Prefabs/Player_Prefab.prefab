@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 6697876586223770766}
   - component: {fileID: 1257817631}
   - component: {fileID: 5367276861345093459}
+  - component: {fileID: 3468780268579208930}
   - component: {fileID: 8123997470517602278}
   - component: {fileID: 7402307381251589550}
   - component: {fileID: 6708793469464571276}
@@ -90,7 +91,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006482915954250294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.079967976, y: -0.06598908, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8962956933583540409}
@@ -138,7 +139,7 @@ SpriteRenderer:
   m_Sprite: {fileID: -3198412966454599316, guid: 5017c6f96b7e08041bd7cc2437ed6a37,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.75, y: 0.84}
@@ -183,6 +184,25 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   gravityModifier: 2
   pIsFlipped: 0
+  isInteractable: 0
+  ammo: 0
+  jumpTakeoffSpeed: 6
+  maxSpeed: 2
+  damageOutput: 0
+  health: 0
+  interactableItem: {fileID: 0}
+--- !u!114 &3468780268579208930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006482915954250294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b887f8f729580242ac3c4ea34ec6ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8123997470517602278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2834494632684146261}
   m_Layer: 0
-  m_Name: BulletFlash
+  m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -337,7 +357,7 @@ SpriteRenderer:
   m_Sprite: {fileID: -3368272833400303480, guid: f282d21390ce9bc48a914ad577f97b61,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.48, y: 0.14}
@@ -361,8 +381,8 @@ MonoBehaviour:
   flipGunSprite: 0
   bulletPoint: {fileID: 1956341176}
   bulletPointReversed: {fileID: 1725485}
-  muzzleFlashPoint: {fileID: 0}
-  muzzleFlashPointReversed: {fileID: 0}
+  muzzleFlashPoint: {fileID: 2834494632684146261}
+  muzzleFlashPointReversed: {fileID: 7629075433686962599}
 --- !u!1 &7338608445961101693
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7629075433686962599}
   m_Layer: 0
-  m_Name: BulletFlashReversed
+  m_Name: MuzzleFlashReversed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

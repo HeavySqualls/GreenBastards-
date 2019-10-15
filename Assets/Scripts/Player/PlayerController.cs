@@ -12,6 +12,10 @@ public class PlayerController : Character_Base
     [Space]
     [Header("Player Stats:")]
     public int ammo = 0;
+    public float jumpTakeoffSpeed = 6f;
+    public float maxSpeed = 2f;
+    public float damageOutput;
+    public float health;
 
     [Space]
     [Header("Player Refrences:")]
@@ -26,6 +30,11 @@ public class PlayerController : Character_Base
         spriteRenderer = GetComponent<SpriteRenderer>();
         gun = GetComponentInChildren<GunController>();
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+
     }
 
     protected override void Update()
