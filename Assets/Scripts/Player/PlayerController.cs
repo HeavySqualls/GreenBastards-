@@ -9,6 +9,7 @@ public class PlayerController : Character_Base
     public bool pIsFlipped;
     public bool isInteractable;
     public bool isDead = false;
+    public bool isFrozen = true;
 
     [Space]
     [Header("Player Stats:")]
@@ -20,9 +21,17 @@ public class PlayerController : Character_Base
     public int health = 100;
 
     [Space]
+    [Header("Player Score:")]
+    public int timesPlayerDied = 0;
+    public int bulletsCollected = 0;
+    public int enemiesKilled = 0;
+    public float totalTime = 0;
+
+    [Space]
     [Header("Player Refrences:")]
     public Transform spawnZone;
     public GameObject interactableItem;
+    private GameManager gm;
     private GunController gun;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -30,6 +39,7 @@ public class PlayerController : Character_Base
 
     void Awake()
     {
+        gm = Toolbox.GetInstance().GetGameManager();
         pUI = GetComponentInChildren<PlayerUI>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         gun = GetComponentInChildren<GunController>();
@@ -46,6 +56,11 @@ public class PlayerController : Character_Base
         Interaction();
     }
 
+    public void DeliverScore()
+    {
+        gm.RecieveScore(timesPlayerDied, bulletsCollected, enemiesKilled);
+    }
+
     public void Respawn()
     {
         print("Player is DEAD");
@@ -53,6 +68,7 @@ public class PlayerController : Character_Base
         health = 100;
         pUI.SetHealth(health);
         isDead = false;
+        timesPlayerDied++;
         animator.SetBool("isDead", isDead);
     }
 
@@ -66,7 +82,6 @@ public class PlayerController : Character_Base
         {
             print("Player is DEAD");
             isDead = true;
-
             animator.SetBool("isDead", isDead);
         }
     }
@@ -106,7 +121,7 @@ public class PlayerController : Character_Base
 
     protected override void ComputeVelocity()
     {
-        if (!isDead)
+        if (!isDead && !isFrozen)
         {
             Vector2 move = Vector2.zero;
 

@@ -31,6 +31,7 @@ public class Interactable_AmmoPickup : Interact_Base
             pCon.ammo = pCon.maxAmmo;
         }
         pCon.UpdateAmmoUI();
+        pCon.bulletsCollected += ammoValue;
         pCon.interactableItem = null;
         Destroy(gameObject);
     }

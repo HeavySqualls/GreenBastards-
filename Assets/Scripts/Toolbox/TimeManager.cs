@@ -14,51 +14,59 @@ public class TimeManager : MonoBehaviour
 
     [Space]
     [Header("Time Status:")]
-    public bool isCountDownTime;
-    private bool isCountDownStarted;
-    public GameObject gameOverPanel;
+    private bool isTrackTime;
 
     [Space]
     [Header("Time References:")]
-    public GameObject startText;
     public Text time;
 
-    public float StartCountDownTimer(float levelTime)
+    void Start()
     {
-        if (!isCountDownStarted)
-        {
-            Debug.Log("Time has started!");
-            time.enabled = true;
-            isCountDownStarted = true;
-            isCountDownTime = true;
-            startTime = levelTime;
-        }
-        return startTime;
+        time = GameObject.FindGameObjectWithTag("TimerUI").GetComponent<Text>();
+        isTrackTime = false;
+
+        minutes = "0";
+        seconds = "0";
+    }
+
+    void Update()
+    {
+        TrackTime();
     }
 
     private void TrackTime()
     {
-        if (isCountDownTime)
+        if (isTrackTime)
         {
-            startText.SetActive(false);
-            currentTime = startTime -= Time.deltaTime;
+            Debug.Log("Time has started!");
+            currentTime = startTime += Time.deltaTime;
+            //currentTime = startTime -= Time.deltaTime; ---- For counting down
 
             minutes = ((int)currentTime / 60).ToString();
             seconds = (currentTime % 60).ToString("f1");
 
             time.text = minutes + ":" + seconds;
-
-            if (currentTime <= 0)
-            {
-                StopCountDownTimer();
-            }
         }
     }
 
-    public void StopCountDownTimer()
+    public void StartTimeTracker()
     {
-        isCountDownTime = false;
-        time.enabled = false;
-        isCountDownStarted = false;
+        isTrackTime = true;
+        startTime = 0;
+    }
+
+    public void StopTimeTracker()
+    {
+        isTrackTime = false;
+        Toolbox.GetInstance().GetGameManager().RecieveLevelTime(currentTime);
+    }
+
+    public void ResetTimerManager()
+    {
+        time = GameObject.FindGameObjectWithTag("TimerUI").GetComponent<Text>();
+        isTrackTime = false;
+
+        minutes = "0";
+        seconds = "0";
     }
 }

@@ -38,6 +38,7 @@ public class EnemyController : Character_Base
     [Header("Enemy References:")]
     public Transform eyeRange;
     public Transform groundDetection;
+    private PlayerController pCon;
     private CapsuleCollider2D capsuleCol;
     private Animator animator;
     private GameObject target;
@@ -45,6 +46,7 @@ public class EnemyController : Character_Base
     void Start()
     {
         this.currentState = State.Patrolling;
+        pCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
         capsuleCol = GetComponent<CapsuleCollider2D>();
     }
@@ -146,7 +148,7 @@ public class EnemyController : Character_Base
             animator.SetTrigger("isDead");
             gravityModifier = 0f;
             capsuleCol.enabled = false;
-            //TODO: Send points to player
+            pCon.enemiesKilled++;
             Destroy(gameObject, 3f);
             this.currentState = State.Dead;
         }

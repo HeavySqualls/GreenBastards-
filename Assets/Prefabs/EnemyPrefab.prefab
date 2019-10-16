@@ -134,7 +134,7 @@ MonoBehaviour:
   isPatroller: 1
   patrolSpeed: 1.25
   huntSpeed: 3
-  damageOutput: 10
+  damageOutput: 50
   health: 10
   pauseTime: 2
   eyeRange: {fileID: 995023721}

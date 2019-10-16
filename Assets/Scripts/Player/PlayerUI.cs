@@ -9,7 +9,6 @@ public class PlayerUI : MonoBehaviour
     public Image healthBar;
     public int MinHealth;
     public int MaxHealth;
-
     private int mCurrentValue;
     private float mCurrentPercent;
 
@@ -18,13 +17,28 @@ public class PlayerUI : MonoBehaviour
     public GameObject None;
     public int MinAmmo;
     public int MaxAmmo;
-
+    private GameObject startText;
     private int mCurrentAmmoValue;
     private float mCurrentAmmoPercent;
 
+    private bool gameStart = false;
+    private PlayerController pCon;
+
     void Start()
     {
-        //None.SetActive(false);
+        startText = GameObject.FindGameObjectWithTag("StartText");
+        pCon = GetComponentInParent<PlayerController>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Return) && gameStart == false)
+        {
+            startText.SetActive(false);
+            Toolbox.GetInstance().GetTimeManager().StartTimeTracker();
+            pCon.isFrozen = false;
+            gameStart = true;
+        }
     }
 
     public void SetHealth(int _health)

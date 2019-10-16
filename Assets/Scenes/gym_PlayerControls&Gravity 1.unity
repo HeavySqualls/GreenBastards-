@@ -37910,6 +37910,33 @@ PrefabInstance:
       propertyPath: spawnZone
       value: 
       objectReference: {fileID: 375815174}
+    - target: {fileID: 5367276861345093459, guid: 5396d2eaff80e0149a7dcdb68c48cc08,
+        type: 3}
+      propertyPath: gravityModifier
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367276861345093459, guid: 5396d2eaff80e0149a7dcdb68c48cc08,
+        type: 3}
+      propertyPath: jumpTakeoffSpeed
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367276861345093459, guid: 5396d2eaff80e0149a7dcdb68c48cc08,
+        type: 3}
+      propertyPath: minGroundNormalY
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 675531272, guid: 5396d2eaff80e0149a7dcdb68c48cc08, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427254287, guid: 5396d2eaff80e0149a7dcdb68c48cc08, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202952083, guid: 5396d2eaff80e0149a7dcdb68c48cc08, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5396d2eaff80e0149a7dcdb68c48cc08, type: 3}
 --- !u!1001 &4945583639626650216
