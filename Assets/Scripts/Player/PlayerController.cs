@@ -8,6 +8,7 @@ public class PlayerController : Character_Base
     [Header("Player Status:")]
     public bool pIsFlipped;
     public bool isInteractable;
+    public bool isDead = false;
 
     [Space]
     [Header("Player Stats:")]
@@ -15,12 +16,12 @@ public class PlayerController : Character_Base
     public float jumpTakeoffSpeed = 6f;
     public float maxSpeed = 2f;
     public float damageOutput;
-    public float health;
+    public int health = 10;
 
     [Space]
     [Header("Player Refrences:")]
+    public Transform spawnZone;
     public GameObject interactableItem;
-
     private GunController gun;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -32,11 +33,6 @@ public class PlayerController : Character_Base
         animator = GetComponent<Animator>();
     }
 
-    void Start()
-    {
-
-    }
-
     protected override void Update()
     {
         base.Update();
@@ -45,9 +41,30 @@ public class PlayerController : Character_Base
         Interaction();
     }
 
+    public void Respawn()
+    {       
+        transform.position = spawnZone.position;
+        isDead = false;
+        animator.SetBool("isDead", isDead);
+    }
+
+    public void TakeDamage(int _damage)
+    {
+        health -= _damage;
+        StartCoroutine(IFlashRed(spriteRenderer));
+
+        if (health <= 0)
+        {
+            print("Player is DEAD");
+            isDead = true;
+
+            animator.SetBool("isDead", isDead);
+        }
+    }
+
     private void Interaction()
     {
-        if (interactableItem != null)
+        if (interactableItem != null && !isDead)
         {
             if (Input.GetKeyUp(KeyCode.E))
             {
@@ -65,33 +82,36 @@ public class PlayerController : Character_Base
 
     protected override void ComputeVelocity()
     {
-        Vector2 move = Vector2.zero;
-
-        move.x = Input.GetAxis("Horizontal");
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (!isDead)
         {
-            velocity.y = jumpTakeoffSpeed;
-        }
-        else if (Input.GetButtonUp("Jump"))
-        {
-            if (velocity.y > 0)
+            Vector2 move = Vector2.zero;
+
+            move.x = Input.GetAxis("Horizontal");
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                velocity.y = velocity.y * 0.5f;
+                velocity.y = jumpTakeoffSpeed;
             }
-        }
+            else if (Input.GetButtonUp("Jump"))
+            {
+                if (velocity.y > 0)
+                {
+                    velocity.y = velocity.y * 0.5f;
+                }
+            }
 
-        bool flipPlayerSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
-        if (flipPlayerSprite)
-        {
-            pIsFlipped = !pIsFlipped;
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-        }
+            bool flipPlayerSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < -0.01f));
+            if (flipPlayerSprite)
+            {
+                pIsFlipped = !pIsFlipped;
+                spriteRenderer.flipX = !spriteRenderer.flipX;
+            }
 
-        animator.SetBool("grounded", isGrounded);
-        animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+            animator.SetBool("grounded", isGrounded);
+            animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
 
-        targetVelocity = move * maxSpeed;
+            targetVelocity = move * maxSpeed;
+        }        
     }
 
     private void FlipGun()

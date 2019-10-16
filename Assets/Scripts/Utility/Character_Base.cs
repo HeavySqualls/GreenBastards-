@@ -63,6 +63,23 @@ public class Character_Base : MonoBehaviour
         Movement(move, true);
     }
 
+    //protected void FlashRed(SpriteRenderer _thisRenderer)
+    //{
+    //    StartCoroutine(IFlashRed(_thisRenderer));
+    //}
+
+    protected IEnumerator IFlashRed(SpriteRenderer _thisFlashRenderer)
+    {
+        _thisFlashRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        _thisFlashRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        _thisFlashRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        _thisFlashRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+    }
+
     void Movement(Vector2 move, bool yMovement)
     {
         float distance = move.magnitude;
@@ -104,6 +121,5 @@ public class Character_Base : MonoBehaviour
 
         rb2d.position = rb2d.position + move.normalized * distance;
     }
-
 }
 

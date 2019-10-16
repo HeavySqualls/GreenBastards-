@@ -28,8 +28,8 @@ public class GunController : MonoBehaviour
     {
         pCon = GetComponentInParent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        bulletPrefab = (GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/Bullet_Projectile_Prefab.prefab");
-        muzzleFlash = (GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/BulletFlashPrefab.prefab");
+        bulletPrefab = Resources.Load<GameObject>("Bullet_Projectile_Prefab"); 
+        muzzleFlash = Resources.Load<GameObject>("BulletFlashPrefab");
     }
 
     void Update()
@@ -55,7 +55,6 @@ public class GunController : MonoBehaviour
                 Instantiate(muzzleFlash, muzzleFlashPointReversed.position, muzzleFlashPointReversed.rotation);
                 pCon.ammo -= 1;
             }
-
         }
     }
 

@@ -168,7 +168,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 2
 --- !u!114 &5367276861345093459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,11 +185,13 @@ MonoBehaviour:
   gravityModifier: 2
   pIsFlipped: 0
   isInteractable: 0
+  isDead: 0
   ammo: 0
   jumpTakeoffSpeed: 6
   maxSpeed: 2
   damageOutput: 0
-  health: 0
+  health: 10
+  spawnZone: {fileID: 0}
   interactableItem: {fileID: 0}
 --- !u!114 &3468780268579208930
 MonoBehaviour:
