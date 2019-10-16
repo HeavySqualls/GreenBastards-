@@ -26,6 +26,11 @@ public class Interactable_AmmoPickup : Interact_Base
     {
         base.OnInteracted();
         pCon.ammo += ammoValue;
+        if (pCon.ammo > pCon.maxAmmo)
+        {
+            pCon.ammo = pCon.maxAmmo;
+        }
+        pCon.UpdateAmmoUI();
         pCon.interactableItem = null;
         Destroy(gameObject);
     }

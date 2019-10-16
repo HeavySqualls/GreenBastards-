@@ -8,8 +8,8 @@ public class GunController : MonoBehaviour
     [Space]
     [Header("Bullet Stats:")]
     public bool flipGunSprite;
-    private float rotSpeed = 11.5f;
-    private float rotLimit = 31f;
+    readonly float rotSpeed = 11.5f;
+    readonly float rotLimit = 31f;
 
     [Space]
     [Header("Bullet Refrences:")]
@@ -48,22 +48,23 @@ public class GunController : MonoBehaviour
                 Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation);
                 Instantiate(muzzleFlash, muzzleFlashPoint.position, muzzleFlashPoint.rotation);
                 pCon.ammo -= 1;
+                pCon.UpdateAmmoUI();
             }
             else
             {
                 Instantiate(bulletPrefab, bulletPointReversed.position, bulletPointReversed.rotation);
                 Instantiate(muzzleFlash, muzzleFlashPointReversed.position, muzzleFlashPointReversed.rotation);
                 pCon.ammo -= 1;
+                pCon.UpdateAmmoUI();
             }
         }
     }
 
     void FaceMouse()
     {
-        float angle;
-
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
+        float angle;
         if (!flipGunSprite)
         {
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

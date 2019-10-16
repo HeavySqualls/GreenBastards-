@@ -134,7 +134,7 @@ MonoBehaviour:
   isPatroller: 1
   patrolSpeed: 1.25
   huntSpeed: 3
-  damageOutput: 2
+  damageOutput: 10
   health: 10
   pauseTime: 2
   eyeRange: {fileID: 995023721}
@@ -193,8 +193,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.05}
-  m_Size: {x: 0.65, y: 0.72}
-  m_Direction: 0
+  m_Size: {x: 0.05, y: 0.61}
+  m_Direction: 1
 --- !u!1 &469037707346670715
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,10 +13,11 @@ public class PlayerController : Character_Base
     [Space]
     [Header("Player Stats:")]
     public int ammo = 0;
+    public int maxAmmo = 25;
     public float jumpTakeoffSpeed = 6f;
     public float maxSpeed = 2f;
     public float damageOutput;
-    public int health = 10;
+    public int health = 100;
 
     [Space]
     [Header("Player Refrences:")]
@@ -25,12 +26,16 @@ public class PlayerController : Character_Base
     private GunController gun;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private PlayerUI pUI;
 
     void Awake()
     {
+        pUI = GetComponentInChildren<PlayerUI>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         gun = GetComponentInChildren<GunController>();
         animator = GetComponent<Animator>();
+
+        pUI.SetAmmo(ammo);
     }
 
     protected override void Update()
@@ -42,8 +47,11 @@ public class PlayerController : Character_Base
     }
 
     public void Respawn()
-    {       
+    {
+        print("Player is DEAD");
         transform.position = spawnZone.position;
+        health = 100;
+        pUI.SetHealth(health);
         isDead = false;
         animator.SetBool("isDead", isDead);
     }
@@ -51,6 +59,7 @@ public class PlayerController : Character_Base
     public void TakeDamage(int _damage)
     {
         health -= _damage;
+        UpdateHealthUI();
         StartCoroutine(IFlashRed(spriteRenderer));
 
         if (health <= 0)
@@ -59,6 +68,21 @@ public class PlayerController : Character_Base
             isDead = true;
 
             animator.SetBool("isDead", isDead);
+        }
+    }
+
+    public void UpdateHealthUI()
+    {
+        pUI.SetHealth(health);     
+    }
+
+    public void UpdateAmmoUI()
+    {
+        pUI.SetAmmo(ammo);
+
+        if (ammo <= 0)
+        {
+            pUI.None.SetActive(true);
         }
     }
 

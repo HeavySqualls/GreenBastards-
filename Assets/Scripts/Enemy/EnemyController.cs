@@ -38,6 +38,7 @@ public class EnemyController : Character_Base
     [Header("Enemy References:")]
     public Transform eyeRange;
     public Transform groundDetection;
+    private CapsuleCollider2D capsuleCol;
     private Animator animator;
     private GameObject target;
 
@@ -45,6 +46,7 @@ public class EnemyController : Character_Base
     {
         this.currentState = State.Patrolling;
         animator = GetComponent<Animator>();
+        capsuleCol = GetComponent<CapsuleCollider2D>();
     }
 
     protected override void Update()
@@ -109,7 +111,7 @@ public class EnemyController : Character_Base
 
     private void Dead()
     {
-
+        // wait to be destroyed by take damage call
     }
 
 
@@ -142,6 +144,8 @@ public class EnemyController : Character_Base
         {
             isDead = true;
             animator.SetTrigger("isDead");
+            gravityModifier = 0f;
+            capsuleCol.enabled = false;
             //TODO: Send points to player
             Destroy(gameObject, 3f);
             this.currentState = State.Dead;
