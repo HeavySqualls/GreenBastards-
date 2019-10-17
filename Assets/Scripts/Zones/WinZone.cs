@@ -17,7 +17,7 @@ public class WinZone : MonoBehaviour
             Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
 
             // Change to next level 
-            Toolbox.GetInstance().GetGameManager().NextOnClick();
+            Toolbox.GetInstance().GetGameManager().LevelComplete();
         }
     }
 }

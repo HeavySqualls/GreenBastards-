@@ -40,11 +40,6 @@ public class GameManager : MonoBehaviour
         currentLevelName = SceneManager.GetActiveScene();
     }
 
-    void Update()
-    {
-        
-    }
-
 
     // ------ SCORE MANAGEMENT ------ //
 
@@ -65,7 +60,7 @@ public class GameManager : MonoBehaviour
     // ------ SCENE MANAGEMENT ------ //
 
 
-    public void NextOnClick()
+    public void LevelComplete()
     {
         if (isLastLevel)
         {
@@ -75,6 +70,12 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(currentLevelIndex + 1);
         }
+    }
+
+    public void RestartLevel()
+    {
+        timesPlayerDied++;
+        SceneManager.LoadScene(currentLevelIndex);
     }
 
 

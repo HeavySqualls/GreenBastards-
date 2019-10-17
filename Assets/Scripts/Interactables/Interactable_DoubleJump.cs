@@ -14,14 +14,11 @@ public class Interactable_DoubleJump : Interact_Base
         base.OnTriggerEnter2D(other);
     }
 
-    public override void OnTriggerExit2D(Collider2D other)
-    {
-        base.OnTriggerExit2D(other);
-    }
-
     public override void OnInteracted()
     {
         base.OnInteracted();
-        pCon.Jump();
+        pCon.DoubleJump();
+        pCon.GetComponent<PlayerController>().interactableItem = null;
+        pCon = null;
     }
 }

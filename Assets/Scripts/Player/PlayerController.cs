@@ -63,13 +63,16 @@ public class PlayerController : Character_Base
 
     public void Respawn()
     {
-        print("Player is DEAD");
-        transform.position = spawnZone.position;
-        health = 100;
-        pUI.SetHealth(health);
-        isDead = false;
-        timesPlayerDied++;
-        animator.SetBool("isDead", isDead);
+        //print("Player is DEAD");
+        //transform.position = spawnZone.position;
+        //health = 100;
+        //pUI.SetHealth(health);
+        //isDead = false;
+        //timesPlayerDied++;
+        //animator.SetBool("isDead", isDead);
+
+        Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
+        gm.RestartLevel();
     }
 
     public void TakeDamage(int _damage)
@@ -105,11 +108,15 @@ public class PlayerController : Character_Base
     {
         if (interactableItem != null && !isDead)
         {
-            if (Input.GetKeyUp(KeyCode.E))
+            if (interactableItem.GetComponent<Interactable_DoubleJump>() && Input.GetKeyDown(KeyCode.Mouse1))
             {
-                print("Item picked up.");
                 interactableItem.GetComponent<Interact_Base>().OnInteracted();
-                print(ammo);
+                print("Double jumped!");
+            }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                interactableItem.GetComponent<Interact_Base>().OnInteracted();
+                print("Picked up item");
             }
         }
     }
@@ -153,9 +160,9 @@ public class PlayerController : Character_Base
         }        
     }
 
-    public void Jump()
+    public void DoubleJump()
     {
-        velocity.y = velocity.y * 0.5f;
+        velocity.y = jumpTakeoffSpeed;
     }
 
     private void FlipGun()
