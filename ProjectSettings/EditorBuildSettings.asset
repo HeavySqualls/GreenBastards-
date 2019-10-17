@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/gym_PlayerControls&Gravity.unity
+    path: Assets/Scenes/Level3.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/gym_PlayerControls&Gravity 1.unity
-    guid: d7846757004e95546950b75c25e607a3
+    path: Assets/Scenes/Level2.unity
+    guid: ac066c813280a9643babf0e043168680
   - enabled: 1
-    path: Assets/Scenes/gym_PlayerControls&Gravity 2.unity
-    guid: 7a90d70418b8ad44d8a77df810ffce0b
+    path: Assets/Scenes/Level1.unity
+    guid: d7846757004e95546950b75c25e607a3
   m_configObjects: {}
