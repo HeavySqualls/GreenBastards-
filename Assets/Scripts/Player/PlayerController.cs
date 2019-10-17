@@ -153,6 +153,11 @@ public class PlayerController : Character_Base
         }        
     }
 
+    public void Jump()
+    {
+        velocity.y = velocity.y * 0.5f;
+    }
+
     private void FlipGun()
     {
         if (pIsFlipped)
