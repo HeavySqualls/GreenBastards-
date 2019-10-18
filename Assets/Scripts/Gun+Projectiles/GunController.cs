@@ -34,7 +34,7 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        //FaceMouse();
+        FaceMouse();
         FlipSprite();
         ShootBullet();
     }
@@ -62,7 +62,14 @@ public class GunController : MonoBehaviour
 
     void FaceMouse()
     {
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+        //Vector3 mouseCamPos = Camera.main.ScreenToViewportPoint(mousePos);
+        //mouseCamPos = Vector3.Scale(mouseCamPos, new Vector3(Screen.Width/Screen.Height, 1, 1);
+        //Vector2 direction = mouseCamPos - new Vector3(0.5, 0.5, 0);
+
+        Vector3 stwp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        print(stwp);
+        Vector2 direction = stwp - transform.position;
 
         float angle;
         if (!flipGunSprite)

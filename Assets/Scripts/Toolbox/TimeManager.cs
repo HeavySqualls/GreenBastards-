@@ -38,7 +38,7 @@ public class TimeManager : MonoBehaviour
     {
         if (isTrackTime)
         {
-            Debug.Log("Time has started!");
+
             currentTime = startTime += Time.deltaTime;
             //currentTime = startTime -= Time.deltaTime; ---- For counting down
 

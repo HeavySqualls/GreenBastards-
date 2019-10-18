@@ -25,9 +25,9 @@ public class EnemyController : Character_Base
 
     [Space]
     [Header("Enemy AI:")]
-    public float pauseTime = 2.5f;
+    public float pauseTime = 2f;
     private float detectionRange = 2f;
-    private float wallDistance = 0.01f;
+    private float wallDistance = 0.1f;
     private float groundDistance = 1f;
     private float distanceToTarget;
     private float minDistance = 0.3f;
@@ -185,9 +185,10 @@ public class EnemyController : Character_Base
                 target = hit.collider.gameObject;
                 this.currentState = State.Hunting;
             }
-            else if(!hit.collider.GetComponent<PlayerController>() && target != null && !chasePause)
+            else if(!hit.collider.GetComponent<PlayerController>() && target != null/* && !chasePause*/)
             {
-                StartChaseWait();
+                target = null;
+                this.currentState = State.Patrolling;
             }
         }
     }

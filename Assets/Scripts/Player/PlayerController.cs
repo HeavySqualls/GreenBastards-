@@ -54,6 +54,11 @@ public class PlayerController : Character_Base
         ComputeVelocity();
         FlipGun();
         Interaction();
+
+        if (isFrozen)
+        {
+            isGrounded = true;
+        }
     }
 
     public void DeliverScore()
