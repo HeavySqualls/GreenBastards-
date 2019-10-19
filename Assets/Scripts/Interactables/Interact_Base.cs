@@ -7,6 +7,7 @@ public class Interact_Base : MonoBehaviour
 {
     protected Canvas canvas;
     protected bool isInteractable = true;
+    protected bool isInstantPickup;
 
     public Image interactKey;
 

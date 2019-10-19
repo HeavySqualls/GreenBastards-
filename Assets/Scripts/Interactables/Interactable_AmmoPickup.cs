@@ -10,11 +10,26 @@ public class Interactable_AmmoPickup : Interact_Base
     public override void Start()
     {
         base.Start();
+        isInstantPickup = true;
     }
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
+        if (other.GetComponent<PlayerController>() && isInstantPickup)
+        {
+            pCon.ammo += ammoValue;
+
+            if (pCon.ammo > pCon.maxAmmo)
+            {
+                pCon.ammo = pCon.maxAmmo;
+            }
+
+            pCon.UpdateAmmoUI();
+            pCon.bulletsCollected += ammoValue;
+            pCon.interactableItem = null;
+            Destroy(gameObject);
+        }
     }
 
     public override void OnTriggerExit2D(Collider2D other)

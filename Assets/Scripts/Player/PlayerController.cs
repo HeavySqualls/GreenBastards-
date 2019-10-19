@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : Character_Base
 {
@@ -56,9 +54,7 @@ public class PlayerController : Character_Base
         Interaction();
 
         if (isFrozen)
-        {
             isGrounded = true;
-        }
     }
 
     public void DeliverScore()
@@ -68,14 +64,6 @@ public class PlayerController : Character_Base
 
     public void Respawn()
     {
-        //print("Player is DEAD");
-        //transform.position = spawnZone.position;
-        //health = 100;
-        //pUI.SetHealth(health);
-        //isDead = false;
-        //timesPlayerDied++;
-        //animator.SetBool("isDead", isDead);
-
         Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
         gm.RestartLevel();
     }
@@ -136,7 +124,6 @@ public class PlayerController : Character_Base
         if (!isDead && !isFrozen)
         {
             Vector2 move = Vector2.zero;
-
             move.x = Input.GetAxis("Horizontal");
 
             if (Input.GetButtonDown("Jump") && isGrounded)
@@ -160,7 +147,6 @@ public class PlayerController : Character_Base
 
             animator.SetBool("grounded", isGrounded);
             animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
-
             targetVelocity = move * maxSpeed;
         }        
     }

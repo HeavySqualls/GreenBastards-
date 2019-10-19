@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
@@ -34,9 +32,7 @@ public class PlayerUI : MonoBehaviour
     void Start()
     {
         tM = Toolbox.GetInstance().GetTimeManager();
-        //startText = GameObject.FindGameObjectWithTag("StartText");
         pCon = GetComponentInParent<PlayerController>();
-        //time = Toolbox.GetInstance().GetTimeManager().levelTime;
     }
 
     void Update()

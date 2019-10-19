@@ -16,7 +16,6 @@ public class Character_Base : MonoBehaviour
     protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> hitBufferList = new List<RaycastHit2D>(16);
 
-
     protected const float minMoveDistance = 0.001f;
     protected const float shellRadius = 0.01f;
 
@@ -51,22 +50,18 @@ public class Character_Base : MonoBehaviour
         isGrounded = false;
 
         Vector2 deltaPosition = velocity * Time.deltaTime;
-
         Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-
         Vector2 move = moveAlongGround * deltaPosition.x;
-
         Movement(move, false);
-
         move = Vector2.up * deltaPosition.y;
-
         Movement(move, true);
     }
 
-    //protected void FlashRed(SpriteRenderer _thisRenderer)
-    //{
-    //    StartCoroutine(IFlashRed(_thisRenderer));
-    //}
+    protected IEnumerator NotGroundedDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        isGrounded = false;
+    }
 
     protected IEnumerator IFlashRed(SpriteRenderer _thisFlashRenderer)
     {
@@ -115,8 +110,6 @@ public class Character_Base : MonoBehaviour
                 float modifiedDistance = hitBufferList[i].distance - shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
-
-
         }
 
         rb2d.position = rb2d.position + move.normalized * distance;
