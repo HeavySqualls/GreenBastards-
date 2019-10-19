@@ -10,7 +10,10 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        controlsPanel.SetActive(false);
+        if (controlsPanel != null)
+        {
+            controlsPanel.SetActive(false);
+        }
     }
 
     public void StartGame()

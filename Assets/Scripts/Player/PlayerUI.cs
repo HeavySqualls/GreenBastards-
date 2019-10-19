@@ -14,20 +14,29 @@ public class PlayerUI : MonoBehaviour
 
     // AMMO BAR 
     public Image ammoBar;
-    public GameObject None;
+    public GameObject ammoEmptyIcon;
     public int MinAmmo;
     public int MaxAmmo;
-    private GameObject startText;
+
+    public Text time;
+    public string minutes;
+    public string seconds;
+    private float currentTime;
+
+    public GameObject startText;
     private int mCurrentAmmoValue;
     private float mCurrentAmmoPercent;
 
     private bool gameStart = false;
+    private TimeManager tM;
     private PlayerController pCon;
 
     void Start()
     {
-        startText = GameObject.FindGameObjectWithTag("StartText");
+        tM = Toolbox.GetInstance().GetTimeManager();
+        //startText = GameObject.FindGameObjectWithTag("StartText");
         pCon = GetComponentInParent<PlayerController>();
+        //time = Toolbox.GetInstance().GetTimeManager().levelTime;
     }
 
     void Update()
@@ -39,6 +48,16 @@ public class PlayerUI : MonoBehaviour
             pCon.isFrozen = false;
             gameStart = true;
         }
+
+        UpdateTime();
+    }
+
+    private void UpdateTime()
+    {
+        minutes = ((int)tM.currentTime / 60).ToString();
+        seconds = (tM.currentTime % 60).ToString("f1");
+
+        time.text = minutes + ":" + seconds;
     }
 
     public void SetHealth(int _health)
@@ -71,7 +90,7 @@ public class PlayerUI : MonoBehaviour
             }
             else
             {
-                None.SetActive(false);
+                ammoEmptyIcon.SetActive(false);
                 mCurrentAmmoValue = _Ammo;
                 mCurrentAmmoPercent = (float)mCurrentAmmoValue / (float)(MaxAmmo - MinAmmo);
             }

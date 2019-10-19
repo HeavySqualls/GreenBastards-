@@ -34,7 +34,7 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        FaceMouse();
+        //FaceMouse();
         FlipSprite();
         ShootBullet();
     }

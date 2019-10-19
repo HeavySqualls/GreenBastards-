@@ -10,12 +10,11 @@ public class GameManager : MonoBehaviour
     public int timesPlayerDied = 0;
     public int bulletsCollected = 0;
     public int enemiesKilled = 0;
-    public float totalTime = 0;
+    public float totalTimeValue = 0;
 
     [Space]
     [Header("Scene Management:")]
     private int currentLevelIndex;
-    private Scene currentLevelName;
     private bool isLastLevel = false;
 
     void OnEnable()
@@ -31,13 +30,11 @@ public class GameManager : MonoBehaviour
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ResetGameManager();
-        Toolbox.GetInstance().GetTimeManager().ResetTimerManager();
     }
 
     void Start()
     {
         currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        currentLevelName = SceneManager.GetActiveScene();
     }
 
 
@@ -53,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void RecieveLevelTime(float _time)
     {
-        totalTime += _time;
+        totalTimeValue += _time;
     }
 
 
@@ -78,6 +75,17 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentLevelIndex);
     }
 
+    public void RestartGame()
+    {
+        timesPlayerDied = 0;
+        totalTimeValue = 0;
+        enemiesKilled = 0;
+        bulletsCollected = 0;
+        totalTimeValue = 0;
+
+        SceneManager.LoadScene(0);
+    }
+
 
     // ------ TOOLBOX REFERENCE RESET ------ //
 
@@ -85,7 +93,5 @@ public class GameManager : MonoBehaviour
     private void ResetGameManager()
     {
         currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        currentLevelName = SceneManager.GetActiveScene();
-
     }
 }

@@ -5,28 +5,15 @@ using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
-    [Space]
-    [Header("Time Stats:")]
-    public string minutes;
-    public string seconds;
+    [SerializeField]
+    public float currentTime;
+
     private float startTime;
-    private float currentTime;
-
-    [Space]
-    [Header("Time Status:")]
     private bool isTrackTime;
-
-    [Space]
-    [Header("Time References:")]
-    public Text time;
 
     void Start()
     {
-        time = GameObject.FindGameObjectWithTag("TimerUI").GetComponent<Text>();
         isTrackTime = false;
-
-        minutes = "0";
-        seconds = "0";
     }
 
     void Update()
@@ -38,14 +25,7 @@ public class TimeManager : MonoBehaviour
     {
         if (isTrackTime)
         {
-
             currentTime = startTime += Time.deltaTime;
-            //currentTime = startTime -= Time.deltaTime; ---- For counting down
-
-            minutes = ((int)currentTime / 60).ToString();
-            seconds = (currentTime % 60).ToString("f1");
-
-            time.text = minutes + ":" + seconds;
         }
     }
 
@@ -59,14 +39,6 @@ public class TimeManager : MonoBehaviour
     {
         isTrackTime = false;
         Toolbox.GetInstance().GetGameManager().RecieveLevelTime(currentTime);
-    }
-
-    public void ResetTimerManager()
-    {
-        time = GameObject.FindGameObjectWithTag("TimerUI").GetComponent<Text>();
-        isTrackTime = false;
-
-        minutes = "0";
-        seconds = "0";
+        currentTime = 0;
     }
 }

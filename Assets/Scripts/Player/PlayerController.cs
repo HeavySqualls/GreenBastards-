@@ -105,7 +105,7 @@ public class PlayerController : Character_Base
 
         if (ammo <= 0)
         {
-            pUI.None.SetActive(true);
+            pUI.ammoEmptyIcon.SetActive(true);
         }
     }
 

@@ -12,8 +12,6 @@ public class EnemyController : Character_Base
     public bool isPatroller = true;
     private bool isMoving = false;
     private bool movingRight = true;
-    private bool enemyCharged = false;
-    private bool chasePause = false;
     private bool isDead = false;
 
     [Space]
@@ -29,9 +27,6 @@ public class EnemyController : Character_Base
     private float detectionRange = 2f;
     private float wallDistance = 0.1f;
     private float groundDistance = 1f;
-    private float distanceToTarget;
-    private float minDistance = 0.3f;
-    private float maxDistance = 4f;
     private Vector2 direction;
 
     [Space]
@@ -76,38 +71,15 @@ public class EnemyController : Character_Base
 
     private void Hunting()
     {
-        // If enemy has not charged, get the current location of them, flip sprite if necessary and charge at their last known location.
+        // If enemy has not charged, get the current location of them, 
+        // flip sprite if necessary and charge at their last known location.
         if (isMoving)
         {
-            if (!enemyCharged)
-            {
-                chasePause = false;
-
-                if (target.gameObject.transform.position.x > transform.position.x)
-                    movingRight = false;
-                else
-                    movingRight = true;
-
-                FlipSprite();
-                enemyCharged = true;
-            }
-
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(/*lastPos.x*/target.gameObject.transform.position.x, transform.position.y), huntSpeed * Time.deltaTime);
-
             DetectCollisions();
-            CheckRayCast(direction);
+            PlayerCheckCast(direction);
 
-            distanceToTarget = Vector2.Distance(transform.position, target.gameObject.transform.position);
-            Debug.DrawRay(transform.position, direction * distanceToTarget, Color.yellow);
-
-            if (distanceToTarget > maxDistance)
-            {
-                this.currentState = State.Patrolling;
-            }
-            else if (distanceToTarget <= minDistance && !chasePause)
-            {
-                StartChaseWait();
-            }
+            // Move enemy forward with an increased speed, until it hits the end of the platform it is on
+            transform.Translate(Vector2.right * huntSpeed * Time.deltaTime);
         }
     }
 
@@ -161,17 +133,15 @@ public class EnemyController : Character_Base
 
     private IEnumerator ChaseWait()
     {
-        chasePause = true;
         isMoving = false;
         animator.SetBool("moving", isMoving);
 
         yield return new WaitForSeconds(pauseTime);
 
-        enemyCharged = false;
         isMoving = true;
     }
 
-    private void CheckRayCast(Vector2 direction)
+    private void PlayerCheckCast(Vector2 direction)
     {
         int layer_mask = LayerMask.GetMask("Player");
 
@@ -185,10 +155,10 @@ public class EnemyController : Character_Base
                 target = hit.collider.gameObject;
                 this.currentState = State.Hunting;
             }
-            else if(!hit.collider.GetComponent<PlayerController>() && target != null/* && !chasePause*/)
+
+            if (!hit.collider.GetComponent<PlayerController>() && target != null)
             {
                 target = null;
-                this.currentState = State.Patrolling;
             }
         }
     }
@@ -206,20 +176,15 @@ public class EnemyController : Character_Base
             isMoving = false;
         }
 
-        // Sends a cast out to search for the player
-        CheckRayCast(direction);
+        PlayerCheckCast(direction);
         DetectCollisions();
     }
 
     private void DetectCollisions()
     {
-        // Send cast to look for ground 
-        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, groundDistance);
-        Debug.DrawRay(groundDetection.position, Vector2.down * groundDistance, Color.blue);
+        // ---- CHECK FOR WALL ---- //
 
-        // Sets direction of casts
         RaycastHit2D wallInfo;
-
         if (!movingRight)
         {
             direction = Vector2.left; // If moving left, raycast left
@@ -233,27 +198,43 @@ public class EnemyController : Character_Base
             Debug.DrawRay(groundDetection.position, direction * wallDistance, Color.white);
         }
 
-        // Checks Vertical Collision
-        if (!groundInfo.collider)
-        {
-            FlipSprite();
-        }
-
-        // Checks Horizontal Collision
         if (wallInfo.collider != null)
         {
             if (!wallInfo.collider.isTrigger)
             {
-                if (movingRight)
+                if (movingRight && !wallInfo.collider.GetComponent<PlayerController>())
                 {
                     transform.eulerAngles = new Vector3(0, -180, 0);
                     movingRight = false;
                 }
-                else
+                else if (!movingRight && !wallInfo.collider.GetComponent<PlayerController>())
                 {
                     transform.eulerAngles = new Vector3(0, 0, 0);
                     movingRight = true;
                 }
+
+                // If the enemy has reached the end of the platform, return to patrolling state
+                if (this.currentState == State.Hunting && target == null)
+                {
+                    this.currentState = State.Patrolling;
+                }
+            }
+        }
+
+        // ---- CHECK FOR GROUND ---- //
+
+        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, groundDistance);
+        Debug.DrawRay(groundDetection.position, Vector2.down * groundDistance, Color.blue);
+
+        // Checks for a loss of vertical collision (end of platform)
+        if (!groundInfo.collider)
+        {
+            FlipSprite();
+
+            // If the enemy has reached the edge of the platform, return to patrolling state
+            if (this.currentState == State.Hunting)
+            {
+                this.currentState = State.Patrolling;
             }
         }
     }
@@ -263,11 +244,13 @@ public class EnemyController : Character_Base
         if (movingRight)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
+            direction = Vector2.left;
             movingRight = false;
         }
-        else
+        else if (!movingRight)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
+            direction = Vector2.right;
             movingRight = true;
         }
     }
