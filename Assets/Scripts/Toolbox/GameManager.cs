@@ -67,9 +67,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RestartLevel()
+    public void RestartLevel(bool _ismanualReset)
     {
-        timesPlayerDied++;
+        if (!_ismanualReset)
+            timesPlayerDied++;
+
         SceneManager.LoadScene(currentLevelIndex);
     }
 
@@ -86,7 +88,6 @@ public class GameManager : MonoBehaviour
 
 
     // ------ TOOLBOX REFERENCE RESET ------ //
-
 
     private void ResetGameManager()
     {

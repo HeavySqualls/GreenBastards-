@@ -65,7 +65,7 @@ public class PlayerController : Character_Base
     public void Respawn()
     {
         Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
-        gm.RestartLevel();
+        gm.RestartLevel(false);
     }
 
     public void TakeDamage(int _damage)
