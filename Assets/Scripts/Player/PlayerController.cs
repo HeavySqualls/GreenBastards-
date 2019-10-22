@@ -63,8 +63,7 @@ public class PlayerController : Character_Base
     }
 
     public void Respawn()
-    {
-        Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
+    {        
         gm.RestartLevel(false);
     }
 

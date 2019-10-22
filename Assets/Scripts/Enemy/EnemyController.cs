@@ -8,7 +8,7 @@ public class EnemyController : Character_Base
 
     [Space]
     [Header("Enemy Status:")]
-    public bool isPatroller = true;
+    public bool isHunter = true;
     private bool isMoving = false;
     private bool movingRight = true;
     private bool isDead = false;
@@ -110,18 +110,21 @@ public class EnemyController : Character_Base
 
     public void TakeDamage(int _damage)
     {
-        health -= _damage;
-        StartCoroutine(IFlashRed(GetComponent<SpriteRenderer>()));
-
-        if (health <= 0)
+        if (isHunter)
         {
-            isDead = true;
-            animator.SetTrigger("isDead");
-            gravityModifier = 0f;
-            capsuleCol.enabled = false;
-            pCon.enemiesKilled++;
-            Destroy(gameObject, 3f);
-            this.currentState = State.Dead;
+            health -= _damage;
+            StartCoroutine(IFlashRed(GetComponent<SpriteRenderer>()));
+
+            if (health <= 0)
+            {
+                isDead = true;
+                animator.SetTrigger("isDead");
+                gravityModifier = 0f;
+                capsuleCol.enabled = false;
+                pCon.enemiesKilled++;
+                Destroy(gameObject, 3f);
+                this.currentState = State.Dead;
+            }
         }
     }
 
@@ -164,7 +167,7 @@ public class EnemyController : Character_Base
 
     private void Patrol()
     {
-        if (isGrounded && isPatroller)
+        if (isGrounded)
         {
             isMoving = true;
             transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
@@ -175,7 +178,11 @@ public class EnemyController : Character_Base
             isMoving = false;
         }
 
-        PlayerCheckCast(direction);
+        if (isHunter)
+        {
+            PlayerCheckCast(direction);
+        }
+
         DetectCollisions();
     }
 
@@ -229,6 +236,11 @@ public class EnemyController : Character_Base
         if (!groundInfo.collider)
         {
             FlipSprite();
+
+            if (!isHunter)
+            {
+                ChaseWait();
+            }
 
             // If the enemy has reached the edge of the platform, return to patrolling state
             if (this.currentState == State.Hunting)

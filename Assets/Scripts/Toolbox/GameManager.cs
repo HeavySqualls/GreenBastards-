@@ -5,9 +5,13 @@ public class GameManager : MonoBehaviour
 {
     [Space]
     [Header("Player Score:")]
+    [SerializeField]
     public int timesPlayerDied = 0;
+    [SerializeField]
     public int bulletsCollected = 0;
+    [SerializeField]
     public int enemiesKilled = 0;
+    [SerializeField]
     public float totalTimeValue = 0;
 
     [Space]
@@ -72,16 +76,20 @@ public class GameManager : MonoBehaviour
         if (!_ismanualReset)
             timesPlayerDied++;
 
+        Toolbox.GetInstance().GetTimeManager().StopTimeTracker();
         SceneManager.LoadScene(currentLevelIndex);
     }
 
     public void RestartGame()
     {
         timesPlayerDied = 0;
+        print(timesPlayerDied);
         totalTimeValue = 0;
+        print(totalTimeValue);
         enemiesKilled = 0;
+        print(enemiesKilled);
         bulletsCollected = 0;
-        totalTimeValue = 0;
+        print(bulletsCollected);
 
         SceneManager.LoadScene(0);
     }

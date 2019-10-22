@@ -8,8 +8,10 @@ public class ScorePanel : MonoBehaviour
     public Text totalTime;
     public Text totalScore;
 
-    private int deathValue = 500;
-    private int killValue = 250;
+    public Button mainMenu;
+
+    private int deathValue = 1000;
+    private int killValue = 1250;
 
     private float score;
     private string minutes;
@@ -18,19 +20,20 @@ public class ScorePanel : MonoBehaviour
     private GameManager gm;
     void Start()
     {
+        mainMenu.onClick.AddListener(MenuButton);
         gm = Toolbox.GetInstance().GetGameManager();
         UpdatePanel();
     }
 
     void UpdatePanel()
     {
-        enemiesKilled.text = "Enemies Killed" + "\n" + gm.enemiesKilled;
-        deaths.text = "Deaths" + "\n" + gm.timesPlayerDied;
+        enemiesKilled.text = /*"Enemies Killed" + "\n" + */gm.enemiesKilled.ToString();
+        deaths.text =/* "Deaths" + "\n" + */gm.timesPlayerDied.ToString();
 
         minutes = ((int)gm.totalTimeValue / 60).ToString();
         seconds = (gm.totalTimeValue % 60).ToString("f1");
 
-        totalTime.text = "Total Time" + "\n" + minutes + ":" + seconds;
+        totalTime.text = /*"Total Time" + "\n" +*/ minutes + ":" + seconds;
 
         score = Mathf.Round(((gm.enemiesKilled * killValue) - (gm.timesPlayerDied * deathValue)) - gm.totalTimeValue);
        
